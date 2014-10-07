@@ -1,5 +1,6 @@
 package sample;
 import com.creativemage.tilesheet.EasyTilesheet;
+import openfl.display.Bitmap;
 import openfl.events.Event;
 import openfl.Assets;
 import openfl.display.BitmapData;
@@ -35,6 +36,7 @@ class Sample extends Sprite
 	function makeTilesheet() 
 	{
 		tileSheet = new EasyTilesheet( this.graphics );
+		
 	}
 	
 	function createAnimatedObjects(frameIndexes:Array<Int>) 

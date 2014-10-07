@@ -1,5 +1,4 @@
 package com.creativemage.tilesheet;
-import com.creativemage.tilesheet.AnimatedBody;
 import flash.display.BitmapData;
 import openfl.display.Bitmap;
 import openfl.display.Graphics;
@@ -59,7 +58,6 @@ class EasyTilesheet
 			{
 				var frameIndex = ani.frameIndexes[i];
 				var frameSizes = getTextureSize(frameIndex);
-				
 				
 				if (item.width < frameSizes.x)
 					item.width = frameSizes.x;
@@ -156,25 +154,6 @@ class EasyTilesheet
 		textureArray.push(texture);
 		
 		return textureArray.length - 1;
-	}
-	
-	public function addTextureArrayToAtlas(textures:Array<BitmapData>):Array<Int>
-	{
-		if (inited == true)
-		{
-			throw new Error("Cannot add textures after init()");
-			return [-1];
-		}
-		
-		var indexArray:Array<Int> = [];
-		
-		for ( i in 0...textures.length)
-		{
-			textureArray.push(textures[i]);
-			indexArray.push(textureArray.length - 1);
-		}
-		
-		return indexArray;
 	}
 	
 	public function clearAtlas():Void

@@ -117,7 +117,7 @@ private class Body
 	
 	public var width:Float = 0;
 	public var height:Float = 0;
-	public var scale:Float = 0;
+	public var scale:Float = 1;
 	
 	public var rotation:Float = 0;
 	

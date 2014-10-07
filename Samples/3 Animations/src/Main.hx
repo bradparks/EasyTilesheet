@@ -41,7 +41,7 @@ class Main extends Sprite
 	private function onAllLibsLoaded(e:LibraryLoaderEvent):Void 
 	{
 		var sampleInstance:Sample = new Sample();
-		addChild(sampleInstance);
+		Lib.current.stage.addChild(sampleInstance);
 	}
 
 	/* SETUP */
