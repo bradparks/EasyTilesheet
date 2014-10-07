@@ -1,4 +1,5 @@
 package com.creativemage.tilesheet;
+import com.creativemage.tilesheet.AnimatedBody;
 import flash.display.BitmapData;
 import openfl.display.Bitmap;
 import openfl.display.Graphics;
@@ -37,6 +38,44 @@ class EasyTilesheet
 		graphicsRef = targetGraphicsObject;
 	}
 	// PRIVATE METHODS
+	
+	function provideBodyWithTextureSizes(item:AnimatedBody) 
+	{
+		if (item.animationArray == null || item.animationArray.length < 1)
+		{
+			throw new Error("Animation body has no animations registered");
+			return;
+		}
+		
+		for (ani in item.animationArray)
+		{
+			if (ani.frameCount == 0)
+			{
+				throw new Error("Animation has no frames added");
+				continue;
+			}
+			
+			for ( i in 0...ani.frameCount)
+			{
+				var frameIndex = ani.frameIndexes[i];
+				var frameSizes = getTextureSize(frameIndex);
+				
+				
+				if (item.width < frameSizes.x)
+					item.width = frameSizes.x;
+					
+				if (item.height < frameSizes.y)
+					item.height = frameSizes.y;
+			}
+		}
+	}
+	
+	function getTextureSize(textureIndex:Int):Point
+	{
+		var targetTexture = textureArray[textureIndex];
+		return new Point( targetTexture.width, targetTexture.height );
+	}
+	
 	function renderAtlas() 
 	{
 		var atlasWidth:Int = 0;
@@ -95,6 +134,8 @@ class EasyTilesheet
 		for (ani in animations)
 		if (ani == item)
 			return;
+			
+		provideBodyWithTextureSizes(item);
 		
 		animations.push(item);
 	}
@@ -115,6 +156,25 @@ class EasyTilesheet
 		textureArray.push(texture);
 		
 		return textureArray.length - 1;
+	}
+	
+	public function addTextureArrayToAtlas(textures:Array<BitmapData>):Array<Int>
+	{
+		if (inited == true)
+		{
+			throw new Error("Cannot add textures after init()");
+			return [-1];
+		}
+		
+		var indexArray:Array<Int> = [];
+		
+		for ( i in 0...textures.length)
+		{
+			textureArray.push(textures[i]);
+			indexArray.push(textureArray.length - 1);
+		}
+		
+		return indexArray;
 	}
 	
 	public function clearAtlas():Void

@@ -14,7 +14,7 @@ class Animation
 	@:isVar public var frameCount(default, null):Int;
 	@:isVar public var currentFrame(default, null):Int;
 	
-	private var frameIndexes:Array<Int> = [];
+	public var frameIndexes(default, null):Array<Int> = [];
 	private var currentIndex:Int = 0;
 
 	public function new(?frameIndexes:Array<Int>) 

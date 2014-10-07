@@ -6,12 +6,11 @@ import openfl.display.Sprite;
  * ...
  * @author Alex Kolpakov
  */
-class AnimatedBody extends Sprite
-{
+class AnimatedBody extends Body
+{	
 	public var index(get, never):Int;
-	public var scale(get, set):Float;
 	
-	private var animationArray:Array<Animation> = [];
+	public var animationArray(default, null):Array<Animation> = [];
 	private var currentAnimation:Animation;
 	
 	@:isVar public var isPaused(default, null):Bool = false;
@@ -109,14 +108,25 @@ class AnimatedBody extends Sprite
 		return currentAnimation.currentFrame;
 	}
 	
-	function get_scale():Float 
+}
+
+private class Body
+{
+	public var x:Float = 0;
+	public var y:Float = 0;
+	
+	public var width:Float = 0;
+	public var height:Float = 0;
+	public var scale:Float = 0;
+	
+	public var rotation:Float = 0;
+	
+	public var alpha:Float = 0;
+	
+	public function new()
 	{
-		return scaleX;
+		
 	}
 	
-	function set_scale(value:Float):Float 
-	{
-		return scaleX = scaleY = value;
-	}
 	
 }

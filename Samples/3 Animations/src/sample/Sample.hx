@@ -1,6 +1,6 @@
 package sample;
 import com.creativemage.tilesheet.EasyTilesheet;
-import flash.events.Event;
+import openfl.events.Event;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.display.Sprite;
@@ -39,14 +39,14 @@ class Sample extends Sprite
 	
 	function createAnimatedObjects(frameIndexes:Array<Int>) 
 	{
-		for ( i in 0...100)
+		for ( i in 0...500)
 		{
 			var aObj:AnimatedObject = new AnimatedObject(frameIndexes);
 			aObj.x = Lib.current.stage.stageWidth * Math.random();
 			aObj.y = Lib.current.stage.stageHeight * Math.random();
 			tileSheet.addAnimationBody(aObj);
 			aniObjArray.push(aObj);
-		}
+		}		
 	}
 	
 	function setTimer() 

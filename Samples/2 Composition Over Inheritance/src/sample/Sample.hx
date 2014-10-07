@@ -44,7 +44,7 @@ class Sample extends Sprite
 	
 	function makeInheritedGraphics() 
 	{
-		for ( i in 0...100)
+		for ( i in 0...10000)
 		{
 			var obj:InheritedGraphics = new InheritedGraphics();
 			obj.x = Math.random() * Lib.current.stage.stageWidth;
@@ -56,7 +56,7 @@ class Sample extends Sprite
 	
 	function makeComposedGraphics() 
 	{
-		for ( i in 0...100)
+		for ( i in 0...10000)
 		{
 			var obj:ComposedGraphics = new ComposedGraphics();
 			obj.animatedBody.x = Math.random() * Lib.current.stage.stageWidth;
