@@ -5,6 +5,7 @@ import com.creativemage.libLoader.LibraryLoader;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
+import openfl.display.FPS;
 import sample.Sample;
 
 /**
@@ -42,6 +43,8 @@ class Main extends Sprite
 	{
 		var sampleInstance:Sample = new Sample();
 		Lib.current.stage.addChild(sampleInstance);
+		
+		Lib.current.stage.addChild ( new FPS( 0, 0, 0xFFFFFF ));
 	}
 
 	/* SETUP */

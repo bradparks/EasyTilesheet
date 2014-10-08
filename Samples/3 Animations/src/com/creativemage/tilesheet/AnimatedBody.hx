@@ -1,13 +1,26 @@
 package com.creativemage.tilesheet;
 import openfl.errors.Error;
 import openfl.display.Sprite;
+import openfl.geom.Point;
 
 /**
  * ...
  * @author Alex Kolpakov
  */
-class AnimatedBody extends Body
+ 
+class AnimatedBody
 {	
+	public var x:Float = 0;
+	public var y:Float = 0;
+	
+	public var width(get, never):Float;
+	public var height(get, never):Float;
+	public var scale:Float = 1;
+	
+	public var rotation:Float = 0;
+	
+	public var alpha:Float = 1;
+	
 	public var index(get, never):Int;
 	
 	public var animationArray(default, null):Array<Animation> = [];
@@ -17,7 +30,7 @@ class AnimatedBody extends Body
 	
 	public function new() 
 	{
-		super();
+		
 	}
 	
 	// PUBLIC METHODS
@@ -108,25 +121,14 @@ class AnimatedBody extends Body
 		return currentAnimation.currentFrame;
 	}
 	
-}
-
-private class Body
-{
-	public var x:Float = 0;
-	public var y:Float = 0;
-	
-	public var width:Float = 0;
-	public var height:Float = 0;
-	public var scale:Float = 1;
-	
-	public var rotation:Float = 0;
-	
-	public var alpha:Float = 0;
-	
-	public function new()
+	function get_width():Float
 	{
-		
+		return currentAnimation.currentWidth;
 	}
 	
+	function get_height():Float
+	{
+		return currentAnimation.currentHeight;
+	}
 	
 }

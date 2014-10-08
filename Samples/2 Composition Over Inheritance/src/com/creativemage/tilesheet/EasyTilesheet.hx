@@ -31,12 +31,28 @@ class EasyTilesheet
 	private var bitmapDataAtlas:BitmapData;
 	private var textureArray:Array<BitmapData> = [];
 	private var tileRectArray:Array<Rectangle> = [];
+	private var textureSizeArray:Array<Point> = [];
 
 	public function new(targetGraphicsObject:Graphics) 
 	{
 		graphicsRef = targetGraphicsObject;
 	}
 	// PRIVATE METHODS
+	
+	function provideBodyWithTextureSizes(item:AnimatedBody) 
+	{
+		for (animation in item.animationArray)
+		{
+			for ( i in 0...animation.frameCount)
+			{
+				var textureIndex = animation.frameIndexes[i];
+				var textureSize = textureSizeArray[textureIndex];
+				
+				animation.frameSizes.push( textureSize );
+			}
+		}
+	}
+	
 	function renderAtlas() 
 	{
 		var atlasWidth:Int = 0;
@@ -84,9 +100,11 @@ class EasyTilesheet
 		tileSheet = new Tilesheet(bitmapDataAtlas);
 		addTileRectangles();
 		
-		// no need to keep the rectangles or separated textures in memory anymore
-		tileRectArray = null; 
+		// no need to keep the separated textures in memory anymore
+		for ( t in textureArray)
+			t.dispose();
 		textureArray = null;
+		tileRectArray = null;
 	}
 	
 	public function addAnimationBody(item:AnimatedBody):Void
@@ -95,6 +113,8 @@ class EasyTilesheet
 		for (ani in animations)
 		if (ani == item)
 			return;
+			
+		provideBodyWithTextureSizes(item);
 		
 		animations.push(item);
 	}
@@ -113,6 +133,7 @@ class EasyTilesheet
 		}
 		
 		textureArray.push(texture);
+		textureSizeArray.push ( new Point( texture.width, texture.height ) );
 		
 		return textureArray.length - 1;
 	}

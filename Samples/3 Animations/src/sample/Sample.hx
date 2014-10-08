@@ -5,6 +5,7 @@ import openfl.events.Event;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.display.Sprite;
+import openfl.events.MouseEvent;
 import openfl.events.TimerEvent;
 import openfl.Lib;
 import openfl.utils.Timer;
@@ -19,6 +20,7 @@ class Sample extends Sprite
 	private var tileSheet:EasyTilesheet;
 	private var aniObjArray:Array<AnimatedObject> = [];
 	private var timer:Timer;
+	var renderedIndexes:Array<Int>;
 	
 
 	public function new() 
@@ -26,11 +28,13 @@ class Sample extends Sprite
 		super();
 		
 		makeTilesheet();
-		var renderedIndexes = renderMovieClip();
+		renderedIndexes = renderMovieClip();
 		createAnimatedObjects(renderedIndexes);
 		
 		setTimer();
 		start();
+		
+		Lib.current.stage.addEventListener(MouseEvent.CLICK, onMouseClicked);
 	}
 	
 	function makeTilesheet() 
@@ -84,12 +88,19 @@ class Sample extends Sprite
 	
 	// EVENT HANDLERS
 	
+	private function onMouseClicked(e:Event):Void 
+	{
+		createAnimatedObjects(renderedIndexes);
+	}
+	
 	private function tick(e:Event):Void 
 	{
 		for (a in aniObjArray)
 		{
 			a.x += a.speedX;
-			a.y += a.speedY;
+			
+			if ( a.x > Lib.current.stage.stageWidth || a.x < 0)
+				a.speedX *= -1;
 		}
 		
 		tileSheet.update();

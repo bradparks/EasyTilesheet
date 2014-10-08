@@ -9,7 +9,7 @@ import com.creativemage.tilesheet.Animation;
 class AnimatedObject extends AnimatedBody
 {
 	
-	public var speedX(default, null):Float;
+	public var speedX:Float;
 	public var speedY(default, null):Float;
 
 	public function new( animationFrameIndexes:Array<Int>) 
@@ -19,7 +19,7 @@ class AnimatedObject extends AnimatedBody
 		var a:Animation = new Animation(animationFrameIndexes);
 		addAnimation(a);
 		
-		speedX = -1 + Math.random() * 2;
+		speedX = -10 + Math.random() * 20;
 		speedY = -1 + Math.random() * 2;
 	}
 	

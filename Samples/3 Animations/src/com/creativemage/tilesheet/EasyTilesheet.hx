@@ -31,6 +31,7 @@ class EasyTilesheet
 	private var bitmapDataAtlas:BitmapData;
 	private var textureArray:Array<BitmapData> = [];
 	private var tileRectArray:Array<Rectangle> = [];
+	private var textureSizeArray:Array<Point> = [];
 
 	public function new(targetGraphicsObject:Graphics) 
 	{
@@ -40,38 +41,16 @@ class EasyTilesheet
 	
 	function provideBodyWithTextureSizes(item:AnimatedBody) 
 	{
-		if (item.animationArray == null || item.animationArray.length < 1)
+		for (animation in item.animationArray)
 		{
-			throw new Error("Animation body has no animations registered");
-			return;
-		}
-		
-		for (ani in item.animationArray)
-		{
-			if (ani.frameCount == 0)
+			for ( i in 0...animation.frameCount)
 			{
-				throw new Error("Animation has no frames added");
-				continue;
-			}
-			
-			for ( i in 0...ani.frameCount)
-			{
-				var frameIndex = ani.frameIndexes[i];
-				var frameSizes = getTextureSize(frameIndex);
+				var textureIndex = animation.frameIndexes[i];
+				var textureSize = textureSizeArray[textureIndex];
 				
-				if (item.width < frameSizes.x)
-					item.width = frameSizes.x;
-					
-				if (item.height < frameSizes.y)
-					item.height = frameSizes.y;
+				animation.frameSizes.push( textureSize );
 			}
 		}
-	}
-	
-	function getTextureSize(textureIndex:Int):Point
-	{
-		var targetTexture = textureArray[textureIndex];
-		return new Point( targetTexture.width, targetTexture.height );
 	}
 	
 	function renderAtlas() 
@@ -121,9 +100,11 @@ class EasyTilesheet
 		tileSheet = new Tilesheet(bitmapDataAtlas);
 		addTileRectangles();
 		
-		// no need to keep the rectangles or separated textures in memory anymore
-		tileRectArray = null; 
+		// no need to keep the separated textures in memory anymore
+		for ( t in textureArray)
+			t.dispose();
 		textureArray = null;
+		tileRectArray = null;
 	}
 	
 	public function addAnimationBody(item:AnimatedBody):Void
@@ -152,6 +133,7 @@ class EasyTilesheet
 		}
 		
 		textureArray.push(texture);
+		textureSizeArray.push ( new Point( texture.width, texture.height ) );
 		
 		return textureArray.length - 1;
 	}
