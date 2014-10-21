@@ -13,8 +13,8 @@ class AnimatedBody
 	public var x:Float = 0;
 	public var y:Float = 0;
 	
-	public var width(get, never):Float;
-	public var height(get, never):Float;
+	public var width(get, set):Float;
+	public var height(get, set):Float;
 	public var scale:Float = 1;
 	
 	public var rotation:Float = 0;
@@ -48,7 +48,7 @@ class AnimatedBody
 	{
 		if (isPaused == true)
 			return;
-			
+		
 		currentAnimation.update();
 	}
 	
@@ -123,12 +123,28 @@ class AnimatedBody
 	
 	function get_width():Float
 	{
-		return currentAnimation.currentWidth;
+		return currentAnimation.currentWidth * scale;
 	}
 	
 	function get_height():Float
 	{
-		return currentAnimation.currentHeight;
+		return currentAnimation.currentHeight * scale;
+	}
+	
+	function set_width(value:Float):Float
+	{
+		var currentSize:Float = currentAnimation.currentWidth * scale;
+		scale = value / currentSize;
+		
+		return currentAnimation.currentWidth * scale;
+	}
+	
+	function set_height(value:Float):Float
+	{
+		var currentSize:Float = currentAnimation.currentHeight * scale;
+		scale = value / currentSize;
+		
+		return currentAnimation.currentHeight * scale;
 	}
 	
 }
