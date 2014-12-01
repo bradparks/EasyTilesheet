@@ -7,6 +7,7 @@ import openfl.display.BitmapData;
 import openfl.display.Sprite;
 import openfl.events.MouseEvent;
 import openfl.events.TimerEvent;
+import openfl.geom.Point;
 import openfl.Lib;
 import openfl.utils.Timer;
 import sample.animationObjects.AnimatedObject;
@@ -45,7 +46,7 @@ class Sample extends Sprite
 	
 	function createAnimatedObjects(frameIndexes:Array<Int>) 
 	{
-		for ( i in 0...500)
+		for ( i in 0...1000)
 		{
 			var aObj:AnimatedObject = new AnimatedObject(frameIndexes);
 			aObj.x = Lib.current.stage.stageWidth * Math.random();
@@ -79,7 +80,11 @@ class Sample extends Sprite
 			var bd:BitmapData = new BitmapData( Std.int(mc.width), Std.int(mc.height), true, 0x00000000 );
 			bd.draw(mc);
 			
-			var index:Int = tileSheet.addTextureToAtlas( bd );
+			var centerPoint = new Point();
+			centerPoint.x = bd.width / 2;
+			centerPoint.y = bd.height / 2;
+			
+			var index:Int = tileSheet.addTextureToAtlas( bd, centerPoint );
 			frameIndexArray.push(index);
 		}
 		
@@ -101,6 +106,8 @@ class Sample extends Sprite
 			
 			if ( a.x > Lib.current.stage.stageWidth || a.x < 0)
 				a.speedX *= -1;
+				
+			a.rotation += .1;
 		}
 		
 		tileSheet.update();
