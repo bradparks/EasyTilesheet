@@ -5,6 +5,7 @@ import com.creativemage.tilesheet.EasyTilesheet;
 import flash.events.Event;
 import openfl.Assets;
 import openfl.display.Sprite;
+import openfl.events.MouseEvent;
 import openfl.events.TimerEvent;
 import openfl.Lib;
 import openfl.utils.Timer;
@@ -30,6 +31,8 @@ class Sample extends Sprite
 		
 		setTimer();
 		start();
+		
+		addEventListener(MouseEvent.CLICK, onMouseClick);
 	}
 	
 	/***
@@ -42,6 +45,7 @@ class Sample extends Sprite
 		tileSheet = new EasyTilesheet( this.graphics ); // provide the Graphics instance where the images will be rendered to.
 		textureIndex = tileSheet.addTextureToAtlas( Assets.getBitmapData("img/logo.png") ); // This method adds the textures and returns the ID of that texture.
 		tileSheet.init(); // this method bakes the textures into one single BitmapData
+		
 	}
 	
 	/***
@@ -80,6 +84,11 @@ class Sample extends Sprite
 	}
 	
 	// EVENT HANDLERS
+	
+	private function onMouseClick(e:MouseEvent):Void 
+	{
+		tileSheet.setNewAtlas( Assets.getBitmapData("img/replacement.png") );
+	}
 	
 	private function tick(e:Event):Void 
 	{

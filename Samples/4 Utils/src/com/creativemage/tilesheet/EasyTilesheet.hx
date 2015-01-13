@@ -29,8 +29,7 @@ class EasyTilesheet
 	private var currentAnimation:AnimatedBody;
 	
 	private var bitmapDataAtlas:BitmapData;
-	private var textureArray:Array<BitmapData> = [];
-	private var tileRectArray:Array<Rectangle> = [];
+	private var textureDataArray:Array<TextureData> = [];
 	private var textureSizeArray:Array<Point> = [];
 
 	public function new(targetGraphicsObject:Graphics) 
@@ -58,43 +57,37 @@ class EasyTilesheet
 		var atlasWidth:Int = 0;
 		var atlasHeight:Int = 0;
 		
-		for (texture in textureArray)
+		for (textureData in textureDataArray)
 		{
-			if (texture.width > atlasWidth)
-				atlasWidth = texture.width;
+			if (textureData.texture.width > atlasWidth)
+				atlasWidth = textureData.texture.width;
 				
-			atlasHeight += texture.height;
+			atlasHeight += textureData.texture.height;
 		}
 		
 		bitmapDataAtlas = new BitmapData(atlasWidth, atlasHeight, true, 0x00000000);
 		
 		var destPoint = new Point();
 		var currentHeight:Int = 0;
-		for (texture in textureArray)
+		for (textureData in textureDataArray)
 		{
 			destPoint.y = currentHeight;
-			bitmapDataAtlas.copyPixels(texture, texture.rect, destPoint);
+			bitmapDataAtlas.copyPixels(textureData.texture, textureData.texture.rect, destPoint);
 			
-			currentHeight += texture.height;
+			currentHeight += textureData.texture.height;
 			
-			var rect:Rectangle = new Rectangle(destPoint.x, destPoint.y, texture.width, texture.height);
-			tileRectArray.push(rect);
+			var rect:Rectangle = new Rectangle(destPoint.x, destPoint.y, textureData.texture.width, textureData.texture.height);
+			textureData.rect = rect;
 		}
 	}
 	
 	function addTileRectangles() 
 	{
-		for (rect in tileRectArray)
-			tileSheet.addTileRect(rect);
+		for (textureData in textureDataArray)
+			tileSheet.addTileRect(textureData.rect, textureData.rotationPoint);
 	}
 	
 	// PUBLIC METHODS
-	
-	@:access(openfl.display.Tilesheet)
-	public function setNewAtlas(bitmapData:BitmapData) 
-	{
-		tileSheet.__bitmap = bitmapData;
-	}
 	
 	public function init():Void
 	{
@@ -107,10 +100,9 @@ class EasyTilesheet
 		addTileRectangles();
 		
 		// no need to keep the separated textures in memory anymore
-		for ( t in textureArray)
-			t.dispose();
-		textureArray = null;
-		tileRectArray = null;
+		for ( t in textureDataArray)
+			t.texture.dispose();
+		textureDataArray = null;
 	}
 	
 	public function addAnimationBody(item:AnimatedBody):Void
@@ -130,7 +122,7 @@ class EasyTilesheet
 		animations.remove(item);
 	}
 	
-	public function addTextureToAtlas(texture:BitmapData):Int
+	public function addTextureToAtlas(texture:BitmapData, ?centerPoint:Point):Int
 	{
 		if (inited == true)
 		{
@@ -138,10 +130,14 @@ class EasyTilesheet
 			return -1;
 		}
 		
-		textureArray.push(texture);
+		var textureData = new TextureData();
+		textureData.texture = texture;
+		textureData.rotationPoint = centerPoint;
+		
+		textureDataArray.push(textureData);
 		textureSizeArray.push ( new Point( texture.width, texture.height ) );
 		
-		return textureArray.length - 1;
+		return textureDataArray.length - 1;
 	}
 	
 	public function clearAtlas():Void
@@ -185,4 +181,16 @@ class EasyTilesheet
 		return bitmapDataAtlas.height;
 	}
 	
+}
+
+private class TextureData
+{
+	public var texture:BitmapData;
+	public var rotationPoint:Point;
+	public var rect:Rectangle;
+	
+	public function new()
+	{
+		
+	}
 }
