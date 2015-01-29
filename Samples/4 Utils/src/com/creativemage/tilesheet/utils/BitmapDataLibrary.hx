@@ -1,7 +1,7 @@
-package com.creativemage.tilesheet.swfRendering;
+package src.com.creativemage.tilesheet.utils ;
 import com.creativemage.tilesheet.Animation;
-import com.creativemage.tilesheet.swfRendering.BitmapDataLibrary.ClipSize;
-import com.creativemage.tilesheet.swfRendering.BitmapDataLibrary.ReferenceFrame;
+import src.com.creativemage.tilesheet.utils.BitmapDataLibrary.ClipSize;
+import src.com.creativemage.tilesheet.utils.BitmapDataLibrary.ReferenceFrame;
 import openfl.display.BitmapData;
 import openfl.display.MovieClip;
 import openfl.geom.Point;

@@ -1,6 +1,6 @@
 package sample;
 import com.creativemage.tilesheet.EasyTilesheet;
-import com.creativemage.tilesheet.swfRendering.BitmapDataLibrary;
+import src.com.creativemage.tilesheet.utils.BitmapDataLibrary;
 import openfl.Assets;
 import openfl.display.Sprite;
 

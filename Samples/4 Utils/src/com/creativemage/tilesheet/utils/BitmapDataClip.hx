@@ -1,4 +1,4 @@
-package com.creativemage.tilesheet.swfRendering;
+package src.com.creativemage.tilesheet.utils ;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 
